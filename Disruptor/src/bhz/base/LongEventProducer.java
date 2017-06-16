@@ -35,7 +35,7 @@ public class LongEventProducer {
 			//2.用上面的索引取出一个空的事件用于填充（获取该序号对应的事件对象）
 			LongEvent event = ringBuffer.get(sequence);
 			//3.获取要通过事件传递的业务数据
-			event.setValue(bb.getLong(0));
+			event.setValue(/*bb.getLong(0)*/1000);
 		} finally {
 			//4.发布事件
 			//注意，最后的 ringBuffer.publish 方法必须包含在 finally 中以确保必须得到调用；如果某个请求的 sequence 未被提交，将会堵塞后续的发布操作或者其它的 producer。

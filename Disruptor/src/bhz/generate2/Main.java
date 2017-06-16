@@ -12,7 +12,11 @@ import com.lmax.disruptor.EventFactory;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.EventHandlerGroup;
 import com.lmax.disruptor.dsl.ProducerType;
-
+/**
+ *  事件处理顺序
+ * @author Administrator
+ *
+ */
 public class Main {  
     public static void main(String[] args) throws InterruptedException {  
        
@@ -28,20 +32,19 @@ public class Main {
         }, bufferSize, executor, ProducerType.SINGLE, new BusySpinWaitStrategy());  
         
         //菱形操作
-        /**
+    /*    
         //使用disruptor创建消费者组C1,C2  
         EventHandlerGroup<Trade> handlerGroup = 
         		disruptor.handleEventsWith(new Handler1(), new Handler2());
         //声明在C1,C2完事之后执行JMS消息发送操作 也就是流程走到C3 
         handlerGroup.then(new Handler3());
-        */
         
-        //顺序操作
-        /**
-        disruptor.handleEventsWith(new Handler1()).
-        	handleEventsWith(new Handler2()).
-        	handleEventsWith(new Handler3());
         */
+        //顺序操作  同一处理事件 先后操作
+        
+		/*disruptor.handleEventsWith(new Handler1()).handleEventsWith(
+				new Handler2()).handleEventsWith(new Handler3());*/
+			        
         
         //六边形操作. 
         /**
@@ -55,8 +58,6 @@ public class Main {
         disruptor.after(h2).handleEventsWith(h5);
         disruptor.after(h4, h5).handleEventsWith(h3);
         */
-        
-        
         
         disruptor.start();//启动  
         CountDownLatch latch=new CountDownLatch(1);  

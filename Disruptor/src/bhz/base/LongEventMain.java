@@ -43,13 +43,13 @@ public class LongEventMain {
 		//发布事件
 		RingBuffer<LongEvent> ringBuffer = disruptor.getRingBuffer();
 		
-		LongEventProducer producer = new LongEventProducer(ringBuffer); 
-		//LongEventProducerWithTranslator producer = new LongEventProducerWithTranslator(ringBuffer);
+//		LongEventProducer producer = new LongEventProducer(ringBuffer); 
+		LongEventProducerWithTranslator producer = new LongEventProducerWithTranslator(ringBuffer);
 		ByteBuffer byteBuffer = ByteBuffer.allocate(8);
 		for(long l = 0; l<100; l++){
 			byteBuffer.putLong(0, l);
 			producer.onData(byteBuffer);
-			//Thread.sleep(1000);
+			Thread.sleep(10);
 		}
 
 		
